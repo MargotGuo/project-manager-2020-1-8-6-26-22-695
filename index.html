@@ -20,7 +20,7 @@
       <div class="data">
         <span id="sum">3,841</span>
       </div>
-      <span class="iconfont icon-img">&#xe60c;</span>
+      <span class="iconfont status-img">&#xe60c;</span>
     </div>
 
     <div class="pending">
@@ -32,7 +32,7 @@
         <span id="pending-number">2,305</span>
         <span id="pending-percent">60%</span>
       </div>
-      <span class="iconfont icon-img">&#xe651;</span>
+      <span class="iconfont status-img">&#xe651;</span>
     </div>
 
     <div class="active">
@@ -44,34 +44,55 @@
         <span id="active-number">384</span>
         <span id="active-percent">10%</span>
       </div>
-      <span class="iconfont icon-img">&#xe615;</span>
+      <span class="iconfont status-img">&#xe615;</span>
     </div>
 
-    <div class="close">
+    <div class="closed">
       <div class="detail">
         <span>已解决</span>
         <span class="in-time">实时</span>
       </div>
       <div class="data">
-        <span id="close-number">1,152</span>
-        <span id="close-percent">30%</span>
+        <span id="closed-number">1,152</span>
+        <span id="closed-percent">30%</span>
       </div>
-      <span class="iconfont icon-img">&#xe614;</span>
+      <span class="iconfont status-img">&#xe614;</span>
     </div>
   </section>
-
-  <h1 class="title">项目列表</h1>
-
-  <table id="main-table">
-    <tr class="header-row">
-      <td class='header-cell'>项目名称</td>
-      <td class='header-cell'>项目描述</td>
-      <td class='header-cell'>截止时间</td>
-      <td class='header-cell'>状态</td>
-      <td class='header-cell'>操作</td>
-    </tr>
-  </table>
-
+  
+  <div class="main">
+    <h1 class="title">项目列表</h1>
+    <table class="main-table">
+      <thead class="thead">
+        <tr class="header-row">
+          <td class='header-cell'>项目名称</td>
+          <td class='header-cell'>项目描述</td>
+          <td class='header-cell'>截止时间</td>
+          <td class='header-cell'>状态</td>
+          <td class='header-cell'>操作</td>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+      </tbody>
+    </table>
+  </div>
+  
+  <div id="confirm-delete">
+    <div class="alert">
+      <p class="iconfont close-icon" onclick="removeFilter()">&#xe600;</p>
+      <div class="info">
+        <span class="iconfont question">&#xe60a;</span>
+        <div>
+          <p class="hint">提示</p>
+          <p class="hint-detail">确认删除该项目吗？</p>
+        </div>
+      </div>
+      <div class="confirm-button">
+        <button id="confirm">确认</button>
+        <button id="cancel" onclick="removeFilter()">取消</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
