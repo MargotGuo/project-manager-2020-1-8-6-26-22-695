@@ -2,12 +2,12 @@ window.onload = () => {
   axios.get("http://localhost:3000/projects").then(response => {
     renderStatistic(response.data);
     rederProject(response.data);
-  });
+  }).catch(error => console.log(error));
 };
 
 let rederProject = (project) => {
   project.forEach(item => {
-    document.getElementById("tbody").innerHTML += 
+    document.getElementById("tbody").innerHTML +=
       `<tr id=${item.id}>
         <td class="body-cell">${item.name}</td>
         <td class="body-cell"><p class="project-detail">${item.description}</p></td>
@@ -48,11 +48,10 @@ let deleteProject = (id) => {
   alert.setAttribute("class", "filter activate");
   document.getElementById("confirm").onclick = () => {
     document.getElementById(id).remove();
-    axios.delete(`http://localhost:3000/projects/${id}`).then(() => {
-      axios.get("http://localhost:3000/projects/").then(response => {
-        renderStatistic(response.data);
-      });
-    });
+    axios.delete(`http://localhost:3000/projects/${id}`)
+      .then(() => axios.get("http://localhost:3000/projects/"))
+      .then(response => renderStatistic(response.data))
+      .catch(error => console.log(error));
     removeFilter();
   };
 };
