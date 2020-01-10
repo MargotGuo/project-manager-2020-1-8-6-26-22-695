@@ -158,7 +158,11 @@
   color: #f7da47;
 }
 
-.activate-alert {
+.filter {
+  display: none;
+}
+
+.activate {
   position: fixed;
   top: 0;
   left: 0;

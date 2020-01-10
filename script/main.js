@@ -45,7 +45,7 @@ let count = (project) => {
 
 let deleteProject = (id) => {
   let alert = document.getElementById("confirm-delete");
-  alert.setAttribute("class", "activate-alert");
+  alert.setAttribute("class", "filter activate");
   document.getElementById("confirm").onclick = () => {
     document.getElementById(id).remove();
     axios.delete(`http://localhost:3000/projects/${id}`).then(() => {
@@ -59,5 +59,5 @@ let deleteProject = (id) => {
 
 let removeFilter = () => {
   let alert = document.getElementById("confirm-delete");
-  alert.removeAttribute("class");
+  alert.setAttribute("class", "filter");
 };
