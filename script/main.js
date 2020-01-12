@@ -1,8 +1,14 @@
 window.onload = () => {
-  axios.get("http://localhost:3000/projects").then(response => {
+  fetchData().then(response => {
     renderStatistic(response.data);
     renderProject(response.data);
   }).catch(error => console.log(error));
+  bindEvent();
+};
+
+const fetchData = () => axios.get("http://localhost:3000/projects");
+
+const bindEvent = () => {
   document.addEventListener("keypress", event => {
     if (event.code === "Enter" && document.getElementById("search-box").value) { 
       search();
@@ -10,7 +16,7 @@ window.onload = () => {
   });
 };
 
-let renderProject = (project) => {
+const renderProject = (project) => {
   project.forEach(item => {
     document.getElementById("tbody").innerHTML +=
       `<tr id=${item.id}>
@@ -23,7 +29,7 @@ let renderProject = (project) => {
   });
 };
 
-let renderStatistic = (project) => {
+const renderStatistic = (project) => {
   let countResult = count(project);
   let sum = project.length;
   document.getElementById("sum").innerHTML = sum;
@@ -40,7 +46,7 @@ let renderStatistic = (project) => {
   });
 };
 
-let count = (project) => {
+const count = (project) => {
   let result = {};
   project.forEach(item => {
     result[item.status] ? result[item.status]++ : result[item.status] = 1;
@@ -48,26 +54,26 @@ let count = (project) => {
   return result;
 };
 
-let deleteProject = (id) => {
+const deleteProject = (id) => {
   let alert = document.getElementById("confirm-delete");
   alert.setAttribute("class", "filter activate");
   document.getElementById("confirm").onclick = () => {
     document.getElementById(id).remove();
     axios.delete(`http://localhost:3000/projects/${id}`)
-      .then(() => axios.get("http://localhost:3000/projects/"))
+      .then(fetchData())
       .then(response => renderStatistic(response.data))
       .catch(error => console.log(error));
     removeFilter();
   };
 };
 
-let removeFilter = () => {
+const removeFilter = () => {
   let alert = document.getElementById("confirm-delete");
   alert.setAttribute("class", "filter");
 };
 
-let sort = (status) => {
-  axios.get("http://localhost:3000/projects/").then(response => {
+const sort = (status) => {
+  fetchData().then(response => {
     let sortedArr = sortProject(response.data, status);
     document.getElementById("tbody").innerHTML = "";
     renderProject(sortedArr);
@@ -81,7 +87,7 @@ let sort = (status) => {
   });
 };
 
-let sortProject = (project, status) => 
+const sortProject = (project, status) => 
   project.sort((item_1, item_2) => {
     if (status === "up") {
       return item_1.endTime > item_2.endTime ? 1 : -1;
@@ -89,9 +95,9 @@ let sortProject = (project, status) =>
     return item_1.endTime > item_2.endTime ? -1 : 1;
   });
 
-let search = () => {
+const search = () => {
   let info = document.getElementById("search-box").value;
-  axios.get("http://localhost:3000/projects/").then(response => {
+  fetchData().then(response => {
     let project = response.data;
     let searchedProject = project.filter(item => item.name.includes(info));
     document.getElementById("tbody").innerHTML = "";
