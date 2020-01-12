@@ -3,8 +3,8 @@ window.onload = () => {
     renderStatistic(response.data);
     renderProject(response.data);
   }).catch(error => console.log(error));
-  document.getElementById("search-box").addEventListener("keypress", (event) => {
-    if (event.code === "Enter") { 
+  document.addEventListener("keypress", event => {
+    if (event.code === "Enter" && document.getElementById("search-box").value) { 
       search();
     }
   });
