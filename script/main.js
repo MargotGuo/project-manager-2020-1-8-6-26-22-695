@@ -1,11 +1,16 @@
 window.onload = () => {
   axios.get("http://localhost:3000/projects").then(response => {
     renderStatistic(response.data);
-    rederProject(response.data);
+    renderProject(response.data);
   }).catch(error => console.log(error));
+  document.getElementById("search-box").addEventListener("keypress", (event) => {
+    if (event.code === "Enter") { 
+      search();
+    }
+  });
 };
 
-let rederProject = (project) => {
+let renderProject = (project) => {
   project.forEach(item => {
     document.getElementById("tbody").innerHTML +=
       `<tr id=${item.id}>
@@ -59,4 +64,37 @@ let deleteProject = (id) => {
 let removeFilter = () => {
   let alert = document.getElementById("confirm-delete");
   alert.setAttribute("class", "filter");
+};
+
+let sort = (status) => {
+  axios.get("http://localhost:3000/projects/").then(response => {
+    let sortedArr = sortProject(response.data, status);
+    document.getElementById("tbody").innerHTML = "";
+    renderProject(sortedArr);
+    if (status === "up") {
+      document.getElementById("up").classList.add("present");
+      document.getElementById("down").classList.remove("present");
+    } else {
+      document.getElementById("up").classList.remove("present");
+      document.getElementById("down").classList.add("present");
+    }
+  });
+};
+
+let sortProject = (project, status) => 
+  project.sort((item_1, item_2) => {
+    if (status === "up") {
+      return item_1.endTime > item_2.endTime ? 1 : -1;
+    }
+    return item_1.endTime > item_2.endTime ? -1 : 1;
+  });
+
+let search = () => {
+  let info = document.getElementById("search-box").value;
+  axios.get("http://localhost:3000/projects/").then(response => {
+    let project = response.data;
+    let searchedProject = project.filter(item => item.name.includes(info));
+    document.getElementById("tbody").innerHTML = "";
+    renderProject(searchedProject);
+  });
 };

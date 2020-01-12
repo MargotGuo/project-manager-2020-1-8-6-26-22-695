@@ -233,3 +233,33 @@
 #cancel {
   background-color: #ffffff;
 }
+
+.present {
+  color: #3080fe;
+}
+
+.sort {
+  cursor: pointer;
+}
+
+.search-title {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.search-button {
+  position: absolute;
+  right: 10px;
+  top: 6px;
+  font-size: 20px;
+  color: #aaa;
+}
+
+.search-box {
+  width: 200px;
+  height: 32px;
+  padding: 0px 38px 0px 12px;
+  border-radius: 20px;
+  border: solid 1px #eee;
+}
