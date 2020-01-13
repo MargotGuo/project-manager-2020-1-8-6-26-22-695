@@ -1,5 +1,5 @@
 window.onload = () => {
-  fetchData().then(response => {
+  projectData.then(response => {
     renderStatistic(response.data);
     renderProject(response.data);
   }).catch(error => console.log(error));
@@ -7,6 +7,7 @@ window.onload = () => {
 };
 
 const fetchData = () => axios.get("http://localhost:3000/projects");
+const projectData = fetchData();
 
 const bindEvent = () => {
   document.addEventListener("keypress", event => {
@@ -56,7 +57,7 @@ const count = (project) => {
 
 const deleteProject = (id) => {
   let alert = document.getElementById("confirm-delete");
-  alert.setAttribute("class", "filter activate");
+  alert.classList.add("activate");
   document.getElementById("confirm").onclick = () => {
     document.getElementById(id).remove();
     axios.delete(`http://localhost:3000/projects/${id}`)
@@ -69,11 +70,11 @@ const deleteProject = (id) => {
 
 const removeFilter = () => {
   let alert = document.getElementById("confirm-delete");
-  alert.setAttribute("class", "filter");
+  alert.classList.remove("activate");
 };
 
 const sort = (status) => {
-  fetchData().then(response => {
+  projectData.then(response => {
     let sortedArr = sortProject(response.data, status);
     document.getElementById("tbody").innerHTML = "";
     renderProject(sortedArr);
@@ -97,7 +98,7 @@ const sortProject = (project, status) =>
 
 const search = () => {
   let info = document.getElementById("search-box").value;
-  fetchData().then(response => {
+  projectData.then(response => {
     let project = response.data;
     let searchedProject = project.filter(item => item.name.includes(info));
     document.getElementById("tbody").innerHTML = "";
